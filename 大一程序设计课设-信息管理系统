@@ -1,0 +1,968 @@
+#include<stdio.h>
+#include<math.h>
+#include<windows.h>
+#include<stdlib.h>
+#include<string.h>
+//为什么不能用全局数组。。。。。
+//为什么不让我用全局变量，老师你心好狠(哭）
+struct Date
+{
+    int year;
+    int month;
+	int day;
+};
+struct GraduateInfo
+{
+    char student_id[20];       // 学号
+    char name[30];             // 姓名
+    char gender;               // 性别
+    struct Date birth_date;    // 出生年月日
+    int enrollment_year;       // 入学年份
+    int graduation_year;       // 毕业年份
+    char education_level[20];  // 毕业学历
+    char major[50];            // 毕业专业
+    char career_direction[30]; // 就业方向
+    char employer[100];        // 就业/升学单位
+    char job_major[50];        // 从事专业
+};
+void menu()
+{
+	printf("\n");
+    printf("╔═════════════════════════════════════════════╗\n");
+    printf("║信息学院（人工智能学院）毕业生就业去向管理系统║ \n");
+    printf("╠═════════════════════════════════════════════╣\n");
+    printf("║  1. 批量导入就业数据                      ║\n");
+    printf("║  2. 浏览就业数据                          ║\n");
+    printf("║  3. 查询就业数据                          ║\n");
+    printf("║  4. 增录就业数据                          ║\n");
+    printf("║  5. 删除就业数据                          ║\n");
+    printf("║  6. 修改就业数据                          ║\n");
+	printf("║  7. 统计就业数据                          ║\n");
+    printf("║  0. 退出系统                              ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    printf("请选择操作 (0-7): ");
+}
+void opening()
+{   
+    printf("             wilsonwuww信息管理系统启动中,请稍候...\n\n");
+    system("color 0a");
+	int i;
+    printf("正在加载中////");
+	for(i = 0; i < 24; i++)
+	{
+		printf("/");
+		Sleep(100);
+		if(i >16) 
+		{
+			Sleep(200);
+		}
+	}
+	Sleep(2000);
+	printf("/\n");
+	Sleep(1000);
+	printf("加载完毕\n");
+	Sleep(2000);
+	system("cls"); 
+    
+}
+void closing()
+{
+    system("cls");
+	system("color 0a");
+	printf("感谢大家对程序的使用，到这里我的小程序就结束了\n");
+	printf("在这里我要特别感谢我的女朋友\n");
+	Sleep(2000);
+	printf("因为在我的生活中\n");
+	Sleep(3000);
+	printf("她从来都没有出现过\n");
+	Sleep(2000);
+	printf("也正因为这样，我才能专心学习\n");
+	Sleep(2000);
+	printf("开个小玩笑，程序的最后我要感谢我的父母，我的婆婆，我的程序设计老师李绮老师，还有北京林业大学信息学院的各位老师，我的高中，大学同学对我在生活上，学习上的帮助，故余虽愚终卒有所获\n");
+    Sleep(5000);
+	system("cls");
+	printf("最后再次感谢您使用我的程序，再见！\n");
+}
+//批量导入就业数据
+void Graduate_import()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║             批量导入就业数据              ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    int number=0;
+    FILE *student;
+    student =fopen("D:/students.txt","r");
+    if(student==NULL)
+    {
+        printf("该文件不存在，请重新输入毕业生信息");
+        return ;
+    }
+    FILE *insert;
+    insert=fopen("students.dat","wb");
+    fwrite(&number,sizeof(int),1,insert);
+    struct GraduateInfo temp; 
+    struct GraduateInfo students_temp[1500];
+    while(fscanf(student, "%s %s %c %d %d %d %d %d %s %s %s %s %s",
+           temp.student_id, temp.name, &temp.gender,
+           &temp.birth_date.year, &temp.birth_date.month, &temp.birth_date.day,
+           &temp.enrollment_year, &temp.graduation_year,
+           temp.education_level, temp.major, temp.career_direction,
+           temp.employer, temp.job_major) == 13)
+    {
+        int flag = 0; 
+        for(int i = 0; i < number; i++)
+        {
+            if(strcmp(students_temp[i].student_id, temp.student_id) == 0)
+            {
+                printf("毕业生学号 %s 已存在,跳过此毕业生\n", temp.student_id);
+                flag = 1; 
+                break; 
+            }
+        }
+        if(!flag) 
+        {
+            students_temp[number] = temp;
+            number++;
+        }
+    }
+    
+    if(number<20)
+    {
+        printf("输入学生小于20个,请重新输入");
+        fclose(insert);
+        return;
+    } 
+    fseek(insert, 0, SEEK_SET);
+    fwrite(&number,sizeof(int),1,insert);
+    fwrite(students_temp,sizeof(struct GraduateInfo),number,insert);
+    fclose(student);
+    fclose(insert);
+    int i;
+    printf("正在保存中////");
+	for(i = 0; i < 24; i++)
+	{
+		printf("/");
+		Sleep(100);
+		if(i >16) 
+		{
+			Sleep(200);
+		}
+	}
+	Sleep(2000);
+	printf("/\n");
+	Sleep(1000);
+	printf("保存完毕\n");
+	Sleep(2000);
+	system("cls"); 
+}  
+//浏览就业数据
+void Graduate_browse()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║               浏览就业数据                ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    FILE *student;
+    int number;
+    student=fopen("students.dat","rb");
+    if(student==NULL)
+    {
+        printf("目标文件不存在");
+        return;
+    }
+    fread(&number,sizeof(int),1,student);
+    if(number==0)
+    {
+        printf("当前系统无毕业生信息！");
+        fclose(student);
+        return;
+    }
+    else
+    {
+        printf("┌──────────┬──────────┬────┬────────────┬──────┬──────┬──────────┬──────────────┬────────────┬────────────────────┬──────────────┐\n");
+        printf("│  学号     │  姓名    │性别│  出生日期  │ 入学 │ 毕业 │  学历    │    专业      │  就业方向  │     就业单位       │   从事专业   │\n");
+        printf("├──────────┼──────────┼────┼────────────┼──────┼──────┼──────────┼──────────────┼────────────┼────────────────────┼──────────────┤\n");
+        
+        struct GraduateInfo temp;
+        for(int i = 0; i < number; i++)
+        {
+            fread(&temp, sizeof(struct GraduateInfo), 1, student);
+            printf("│ %-10s │ %-8s │ %-2c │ %04d-%02d-%02d │ %-4d │ %-4d │ %-8s │ %-12s │ %-10s │ %-18s │ %-12s │\n",
+                   temp.student_id, temp.name, temp.gender,
+                   temp.birth_date.year, temp.birth_date.month, temp.birth_date.day,
+                   temp.enrollment_year, temp.graduation_year,
+                   temp.education_level, temp.major, temp.career_direction,
+                   temp.employer, temp.job_major);
+        }
+        printf("└──────────┴──────────┴────┴────────────┴──────┴──────┴──────────┴──────────────┴────────────┴────────────────────┴──────────────┘\n");
+    }
+    fclose(student);
+}
+//查询就业数据
+void Graduate_query()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║                查询就业数据               ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    int choice;
+    struct GraduateInfo temp;
+    FILE *student;
+    student=fopen("students.dat","rb");
+    if(student==NULL)
+    {
+        printf("目标文件不存在,无法查询");
+        return;
+    }
+    int number;
+    fread(&number,sizeof(int),1,student);
+    if(number==0)
+    {
+        printf("当前系统无毕业生信息！请录入信息后再进行查询");
+        fclose(student);
+        return;
+    }
+    printf("请选择查询方式:\n1.按学号查询\n2.按姓名查询\n");
+    int flag1=0;
+    int flag2=0;
+    scanf("%d",&choice);
+    if(choice==1)
+    {
+        printf("1.按学号查询\n");
+        printf("请输入学号:");
+        char id[20];
+        scanf("%s",id);
+        for(int i = 0; i < number; i++)
+        {
+            fread(&temp, sizeof(struct GraduateInfo), 1, student);
+            if(strcmp(id,temp.student_id)==0)
+            {
+                  printf("该毕业生信息是：%-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s \n",
+                   temp.student_id, temp.name, temp.gender,
+                   temp.birth_date.year, temp.birth_date.month, temp.birth_date.day,
+                   temp.enrollment_year, temp.graduation_year,
+                   temp.education_level, temp.major, temp.career_direction,
+                   temp.employer, temp.job_major);
+                   flag1=1;
+                   break;//优化：学号是唯一的，找到后可以马上break
+            }
+        }
+        if(!flag1)
+        {
+            printf("没有找到该学生，请核实后重新输入");
+        }
+    }
+    else if(choice==2)
+    {
+        printf("按姓名查询\n");
+        printf("请输入姓名:");
+        char name[30];
+        scanf("%s",name);
+        for(int i = 0; i < number; i++)
+        {
+            fread(&temp, sizeof(struct GraduateInfo), 1, student);
+            if(strcmp(temp.name,name)==0)
+            {
+                  printf("该毕业生信息是: %-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s \n",
+                   temp.student_id, temp.name, temp.gender,
+                   temp.birth_date.year, temp.birth_date.month, temp.birth_date.day,
+                   temp.enrollment_year, temp.graduation_year,
+                   temp.education_level, temp.major, temp.career_direction,
+                   temp.employer, temp.job_major);
+                   flag2=1;
+            }
+        }
+        if(!flag2)
+        {
+            printf("没有找到该毕业生信息，请核实后重新输入");
+        }
+    }
+    fclose(student);
+}
+void Graduate_add()
+{   
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║                增录就业数据               ║\n");
+    printf("╚══════════════════════════════════════════╝\n");    
+    printf("请按照正确的形式输入毕业生信息：");
+    printf("输入格式为（中间请用逗号隔开）：");
+    printf("  学号       姓名    性别   出生日期    入学   毕业   学历        专业        就业方向       就业单位         从事专业   \n");
+    struct GraduateInfo ADD;
+    struct GraduateInfo temp;
+    scanf("%s %s %c %d %d %d %d %d %s %s %s %s %s",ADD.student_id, ADD.name, &ADD.gender,&ADD.birth_date.year, &ADD.birth_date.month, &ADD.birth_date.day,
+&ADD.enrollment_year, &ADD.graduation_year,ADD.education_level, ADD.major, ADD.career_direction,ADD.employer, ADD.job_major);
+    FILE *student;
+    int flag=0;
+    student =fopen("students.dat","rb");
+    if(student==NULL)
+    {
+        printf("该文件不存在，请重新输入毕业生信息");
+        return;
+    }
+    int number;
+    fread(&number,sizeof(int),1,student);
+    for(int i = 0; i < number; i++)
+        {
+            fread(&temp, sizeof(struct GraduateInfo), 1, student);
+            if(strcmp(ADD.student_id,temp.student_id)==0)
+            {
+                flag=1;
+                break;
+            }
+        }
+        fclose(student);
+
+        if(flag)
+        {
+            printf("学号已存在，请重新输入");
+            Sleep(2000);
+            system("cls");
+            return;
+        }
+        student=fopen("students.dat","rb+");
+        if(student == NULL)
+        {
+            printf("无法打开数据文件\n");
+            return;
+        }
+        fread(&number, sizeof(int), 1, student);
+        number++;
+        fseek(student, 0, SEEK_SET);
+        fwrite(&number,sizeof(int),1,student);
+        fseek(student, 0, SEEK_END);
+        fwrite(&ADD,sizeof(struct GraduateInfo),1,student);
+        fclose(student);
+        int i;
+    printf("正在录入中////");
+	for(i = 0; i < 24; i++)
+	{
+		printf("/");
+		Sleep(100);
+		if(i >16) 
+		{
+			Sleep(200);
+		}
+	}
+	Sleep(2000);
+	printf("/\n");
+	Sleep(1000);
+	printf("录入完毕\n");
+	Sleep(2000);
+	system("cls"); 
+
+}
+void Graduate_delete()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║                删除就业数据               ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    
+    FILE *student;
+    student = fopen("students.dat", "rb");
+    if(student == NULL)
+    {
+        printf("目标文件不存在,无法删除\n");
+        return;
+    }
+    
+    int number;
+    fread(&number, sizeof(int), 1, student);
+    
+    if(number == 0)
+    {
+        printf("当前系统无毕业生信息！请录入信息后再进行删除操作\n");
+        fclose(student);
+        return;
+    }
+    struct GraduateInfo temp1[1000];
+    for(int i = 0; i < number; i++)
+    {
+        fread(&temp1[i], sizeof(struct GraduateInfo), 1, student);
+    }
+    fclose(student);
+    
+    int choice;
+    printf("请选择删除方式:\n1.按学号删除\n2.按姓名删除\n");
+    scanf("%d", &choice);
+    int delete_success = 0;
+    if(choice == 1)
+    {
+        printf("1.按学号删除\n");
+        printf("请输入学号:");
+        char id[20];
+        scanf("%s", id);
+        
+        int found_index = -1;
+        for(int i = 0; i < number; i++)
+        {
+            if(strcmp(id, temp1[i].student_id) == 0)
+            {
+                found_index = i;
+                break;
+            }
+        }
+        
+        if(found_index == -1)
+        {
+            printf("未找到学号为 %s 的毕业生信息\n", id);
+            return;
+        }
+        
+        printf("该毕业生信息是： %-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s \n",
+               temp1[found_index].student_id, temp1[found_index].name, temp1[found_index].gender,
+               temp1[found_index].birth_date.year, temp1[found_index].birth_date.month, temp1[found_index].birth_date.day,
+               temp1[found_index].enrollment_year, temp1[found_index].graduation_year,
+               temp1[found_index].education_level, temp1[found_index].major, temp1[found_index].career_direction,
+               temp1[found_index].employer, temp1[found_index].job_major);
+        
+        printf("是否确认删除该毕业生的信息\n1.确认删除\n2.不删除\n");
+        int choice1;
+        scanf("%d", &choice1);
+        
+        if(choice1 == 1)
+        {
+            for(int j = found_index; j < number - 1; j++)
+            {
+                temp1[j] = temp1[j + 1];
+            }
+            number--;
+            delete_success = 1;
+            printf("删除成功！\n");
+        }
+        else
+        {
+            printf("取消删除操作\n");
+            return;
+        }
+    }
+    else if(choice == 2)
+    {
+        printf("按姓名删除\n");
+        printf("请输入姓名:");
+        char name[30];
+        scanf("%s", name);
+        
+        int found_indices[100];
+        int found_count = 0;
+        
+        for(int i = 0; i < number; i++)
+        {
+            if(strcmp(name, temp1[i].name) == 0)
+            {
+                found_indices[found_count] = i;
+                found_count++;
+            }
+        }
+        
+        if(found_count == 0)
+        {
+            printf("未找到姓名为 %s 的毕业生信息\n", name);
+            return;
+        }
+        else if(found_count == 1)
+        {
+            int index = found_indices[0];
+            printf("该毕业生信息是： %-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s \n",
+                   temp1[index].student_id, temp1[index].name, temp1[index].gender,
+                   temp1[index].birth_date.year, temp1[index].birth_date.month, temp1[index].birth_date.day,
+                   temp1[index].enrollment_year, temp1[index].graduation_year,
+                   temp1[index].education_level, temp1[index].major, temp1[index].career_direction,
+                   temp1[index].employer, temp1[index].job_major);
+            
+            printf("是否确认删除该毕业生的信息\n1.确认删除\n2.不删除\n");
+            int choice2;
+            scanf("%d", &choice2);
+            
+            if(choice2 == 1)
+            {
+                for(int j = index; j < number - 1; j++)
+                {
+                    temp1[j] = temp1[j + 1];
+                }
+                number--;
+                delete_success = 1;
+                printf("删除成功！\n");
+            }
+            else
+            {
+                printf("取消删除操作\n");
+                return;
+            }
+        }
+        else
+        {
+            printf("找到%d位同名的毕业生信息\n", found_count);
+            for(int i = 0; i < found_count; i++)
+            {
+                int idx = found_indices[i];
+                printf("%d. 学号: %s, 姓名: %s\n", i+1, temp1[idx].student_id, temp1[idx].name);
+            }
+            
+            printf("请输入要删除的学号:");
+            char check_id[20];
+            scanf("%s", check_id);
+            
+            int delete_index = -1;
+            for(int i = 0; i < found_count; i++)
+            {
+                int idx = found_indices[i];
+                if(strcmp(check_id, temp1[idx].student_id) == 0)
+                {
+                    delete_index = idx;
+                    break;
+                }
+            }
+            
+            if(delete_index == -1)
+            {
+                printf("学号不匹配\n");
+                return;
+            }
+            
+            printf("该毕业生信息是： %-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s \n",
+                   temp1[delete_index].student_id, temp1[delete_index].name, temp1[delete_index].gender,
+                   temp1[delete_index].birth_date.year, temp1[delete_index].birth_date.month, temp1[delete_index].birth_date.day,
+                   temp1[delete_index].enrollment_year, temp1[delete_index].graduation_year,
+                   temp1[delete_index].education_level, temp1[delete_index].major, temp1[delete_index].career_direction,
+                   temp1[delete_index].employer, temp1[delete_index].job_major);
+            
+            printf("是否确认删除该毕业生的信息\n1.确认删除\n2.不删除\n");
+            int choice3;
+            scanf("%d", &choice3);
+            
+            if(choice3 == 1)
+            {
+                for(int j = delete_index; j < number - 1; j++)
+                {
+                    temp1[j] = temp1[j + 1];
+                }
+                number--;
+                delete_success = 1;
+                printf("删除成功！\n");
+            }
+            else
+            {
+                printf("取消删除操作\n");
+                return;
+            }
+        }
+    }
+    else
+    {
+        printf("输入错误\n");
+        return;
+    }
+    if(delete_success)
+    {
+        FILE *new_file;
+        new_file = fopen("students.dat", "wb");
+        fwrite(&number, sizeof(int), 1, new_file);
+        fwrite(temp1, sizeof(struct GraduateInfo), number, new_file);
+        fclose(new_file);
+        printf("正在删除中////");
+        for(int i = 0; i < 24; i++)
+        {
+            printf("/");
+            Sleep(100);
+            if(i > 16) 
+            {
+                Sleep(200);
+            }
+        }
+        Sleep(2000);
+        printf("/\n");
+        Sleep(1000);
+        printf("删除完毕\n");
+        Sleep(2000);
+        system("cls"); 
+    }
+}
+void Graduate_edit()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║                修改就业数据               ║\n");
+    printf("╚══════════════════════════════════════════╝\n");
+    
+    FILE *student;
+    student = fopen("students.dat", "rb");  // 先以只读模式打开检查文件
+    
+    if(student == NULL)
+    {
+        printf("目标文件不存在,无法修改\n");
+        return;
+    }
+    
+    int number;
+    fread(&number, sizeof(int), 1, student);
+    
+    if(number == 0)
+    {
+        printf("当前系统无毕业生信息！请录入信息后再进行修改操作\n");
+        fclose(student);
+        return;
+    }
+    
+    // 读取所有数据到数组
+    struct GraduateInfo temp1[1000];
+    for(int i = 0; i < number; i++)
+    {
+        fread(&temp1[i], sizeof(struct GraduateInfo), 1, student);
+    }
+    fclose(student);  // 关闭文件，后面再重新打开写入
+    
+    printf("请问你要修改的毕业生信息的学号是：");
+    char id[20];
+    scanf("%19s", id);
+    
+    int flag = -1;  // 初始化标志位
+    for(int i = 0; i < number; i++)
+    {
+        if(strcmp(id, temp1[i].student_id) == 0)
+        {
+            flag = i;
+            printf("该毕业生信息是： %-10s  %-8s  %-2c  %04d-%02d-%02d  %-4d  %-4d  %-8s  %-12s  %-10s  %-18s  %-12s │\n",
+                   temp1[i].student_id, temp1[i].name, temp1[i].gender,
+                   temp1[i].birth_date.year, temp1[i].birth_date.month, temp1[i].birth_date.day,
+                   temp1[i].enrollment_year, temp1[i].graduation_year,
+                   temp1[i].education_level, temp1[i].major, temp1[i].career_direction,
+                   temp1[i].employer, temp1[i].job_major);
+            break;
+        }
+    }
+    
+    if(flag == -1)
+    {
+        printf("未找到学号为 %s 的毕业生信息！\n", id);
+        return;
+    }
+    
+    printf("请问你要修改的信息是（学号不可进行修改）:\n");
+    printf("1.姓名 2.性别 3.出生日期 4.入学年份 5.毕业年份 ");
+    printf("6.学历 7.专业 8.就业方向 9.就业单位 10.从事专业\n");
+    printf("请输入选项(1-10): ");
+    
+    int input;
+    scanf("%d", &input);
+    
+    switch(input)
+    {
+        case 1:
+            printf("请输入新的姓名: ");
+            char new_name[50];
+            scanf("%49s", new_name);
+            strcpy(temp1[flag].name, new_name);
+            break;
+            
+        case 2:
+            printf("请输入新的性别(M/F): ");
+            char new_gender;
+            scanf(" %c", &new_gender);  
+            temp1[flag].gender = new_gender;
+            break;
+            
+        case 3:
+            printf("请输入新的出生日期(年 月 日): ");
+            scanf("%d %d %d", 
+                  &temp1[flag].birth_date.year, 
+                  &temp1[flag].birth_date.month, 
+                  &temp1[flag].birth_date.day);
+            break;
+            
+        case 4:
+            printf("请输入新的入学年份: ");
+            scanf("%d", &temp1[flag].enrollment_year);
+            break;
+            
+        case 5:
+            printf("请输入新的毕业年份: ");
+            scanf("%d", &temp1[flag].graduation_year);
+            break;
+            
+        case 6:
+            printf("请输入新的学历: ");
+            char new_edu[20];
+            scanf("%19s", new_edu);
+            strcpy(temp1[flag].education_level, new_edu);
+            break;
+            
+        case 7:
+            printf("请输入新的专业: ");
+            char new_major[50];
+            scanf("%49s", new_major);
+            strcpy(temp1[flag].major, new_major);
+            break;
+            
+        case 8:
+            printf("请输入新的就业方向: ");
+            char new_job[30];
+            scanf("%29s", new_job);
+            strcpy(temp1[flag].career_direction, new_job);
+            break;
+            
+        case 9:
+            printf("请输入新的就业单位: ");
+            char new_com[100];
+            scanf("%99s", new_com);
+            strcpy(temp1[flag].employer, new_com);
+            break;
+            
+        case 10:
+            printf("请输入新的从事专业: ");
+            char new_dir[50];
+            scanf("%49s", new_dir);
+            strcpy(temp1[flag].job_major, new_dir);
+            break;
+            
+        default:
+            printf("没有该选项，请重新输入!\n");
+            return;
+    }
+
+    FILE *save_file = fopen("students.dat", "wb");
+    if(save_file == NULL)
+    {
+        printf("错误：无法保存修改到文件！\n");
+        return;
+    }
+    
+    fwrite(&number, sizeof(int), 1, save_file);
+    fwrite(temp1, sizeof(struct GraduateInfo), number, save_file);
+    fclose(save_file);
+    printf("修改成功！数据已保存到文件。\n");
+}
+void Graduate_statistic()
+{
+    printf("╔══════════════════════════════════════════╗\n");
+    printf("║                统计就业数据               ║ \n");
+    printf("╚══════════════════════════════════════════╝\n");
+    
+    FILE *student;
+    student = fopen("students.dat", "rb");
+    if(student == NULL)
+    {
+        printf("数据文件不存在\n");
+        return;
+    }
+    
+    int number;
+    fread(&number, sizeof(int), 1, student);
+    
+    if(number == 0)
+    {
+        printf("没有毕业生信息\n");
+        fclose(student);
+        return;
+    }
+    
+    struct GraduateInfo students[1000];
+    for(int i = 0; i < number; i++)
+    {
+        fread(&students[i], sizeof(struct GraduateInfo), 1, student);
+    }
+    fclose(student);
+    
+    int input;
+    do {
+        printf("\n1. 统计某年就业率\n");
+        printf("2. 统计某年学历就业率\n");
+        printf("3. 统计某年专业就业率\n");
+        printf("4. 统计就业方向\n");
+        printf("5. 统计从事专业\n");
+        printf("0. 返回\n");
+        printf("请选择: ");
+        
+        scanf("%d", &input);
+        
+        if(input == 0) break;
+        
+        int year;
+        printf("输入年份: ");
+        scanf("%d", &year);
+        
+        if(input == 1)
+        {
+            int total = 0, work = 0;
+            for(int i = 0; i < number; i++)
+            {
+                if(students[i].graduation_year == year)
+                {
+                    total++;
+                    if(strcmp(students[i].career_direction, "二战") != 0 && strcmp(students[i].career_direction, "未就业") != 0 &&strcmp(students[i].career_direction, "其他") != 0)
+                    {
+                        work++;
+                    }
+                }
+            }
+            if(total > 0)
+            {
+                printf("%d年: 共%d人, 就业%d人, 比率%.1f%%\n",year, total, work, (float)work/total*100);
+            }
+            else
+            {
+                printf("这一年没有数据\n");
+            }
+        }
+        else if(input == 2)
+        {
+            printf("%d年各学历就业情况:\n", year);
+            for(int i = 0; i < number; i++)
+            {
+                if(students[i].graduation_year == year)
+                {
+                    int total = 0, work = 0;
+                    char edu[20];
+                    strcpy(edu, students[i].education_level);
+                    
+                    for(int j = 0; j < number; j++)
+                    {
+                        if(students[j].graduation_year == year && strcmp(students[j].education_level, edu) == 0)
+                        {
+                            total++;
+                            if(strcmp(students[j].career_direction, "二战") != 0 && strcmp(students[j].career_direction, "未就业") != 0 && strcmp(students[j].career_direction, "其他") != 0)
+                            {
+                                work++;
+                            }
+                        }
+                    }
+                    printf("%s: %d人毕业, %d人就业\n", edu, total, work);
+                }
+            }
+        }
+        else if(input == 3)
+        {
+            printf("%d年各专业就业情况:\n", year);
+            for(int i = 0; i < number; i++)
+            {
+                if(students[i].graduation_year == year)
+                {
+                    int total = 0, work = 0;
+                    char maj[50];
+                    strcpy(maj, students[i].major);
+                    for(int j = 0; j < number; j++)
+                    {
+                        if(students[j].graduation_year == year &&strcmp(students[j].major, maj) == 0)
+                        {
+                            total++;
+                            if(strcmp(students[j].career_direction, "二战") != 0 && strcmp(students[j].career_direction, "未就业") != 0 && strcmp(students[j].career_direction, "其他") != 0)
+                            {
+                                work++;
+                            }
+                        }
+                    }
+                    printf("%s: %d人毕业, %d人就业\n", maj, total, work);
+                }
+            }
+        }
+        else if(input == 4)
+        {
+            float rate;
+            int sum;
+            printf("%d年就业方向:\n", year);
+            for(int i = 0; i < number; i++)
+            {
+                if(students[i].graduation_year == year)
+                {
+                    int count = 0;
+                    char dir[30];
+                    strcpy(dir, students[i].career_direction);
+                    
+                    for(int j = 0; j < number; j++)
+                    {
+                        if(students[j].graduation_year == year &&strcmp(students[j].career_direction, dir) == 0)
+                        {
+                            count++;
+                        }
+                    }
+                    printf("%s: %d人\n", dir, count);
+                }
+            }
+        }
+        else if(input == 5)
+        {
+            printf("%d年从事专业:\n", year);
+            for(int i = 0; i < number; i++)
+            {
+                if(students[i].graduation_year == year)
+                {
+                    int count = 0;
+                    char job[50];
+                    strcpy(job, students[i].job_major);
+                    for(int j = 0; j < number; j++)
+                    {
+                        if(students[j].graduation_year == year&&strcmp(students[j].job_major, job) == 0)
+                        {
+                            count++;
+                        }
+                    }
+                    printf("%s: %d人\n", job, count);
+                }
+            }
+        }
+        
+        printf("\n按回车继续...");
+        getchar();
+        getchar();
+        
+    } while(input != 0);
+}
+void check()
+{
+    printf("是否要退出程序\n");
+    printf("1.请输入0确认退出\n");
+    printf("2.请输入1返回菜单界面");
+}
+int main()
+{
+    opening();
+    Sleep(2000);
+    do
+    {
+    menu();
+    int input;
+    scanf("%d",&input);
+    switch(input)
+    {
+        case 0:
+        check();
+        int check_in;
+        scanf("%d",&check_in);
+        if(check_in==0)
+        {
+            closing();
+        }
+        break;
+        case 1:
+        Graduate_import();
+        Sleep(3000);
+        break;
+        case 2:
+        Graduate_browse();
+        Sleep(3000);
+        break;
+        case 3:
+        Graduate_query();
+        Sleep(3000);
+        break;
+        case 4:
+        Graduate_add();
+        Sleep(3000);
+        break;
+        case 5:
+        Graduate_delete();
+        Sleep(3000);
+        break;
+        case 6:
+        Graduate_edit();
+        Sleep(3000);
+        break;
+        case 7:
+        Graduate_statistic();
+        Sleep(3000);
+        break;
+        default:
+        printf("输入错误，请重新输入！"); 
+    }
+    printf("输入任意键继续...");
+    getchar();
+    system("cls");
+    }while(1);
+    return 0;
+}//我做到了！！！
