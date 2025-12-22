@@ -383,7 +383,6 @@ int main()
     return 0;
 }
 //拓展：任意输入一个数字判断是否是回文数
-//ai给了一个很妙的方法，但是会比较难想
 #include<stdio.h>
 int main()
 {
