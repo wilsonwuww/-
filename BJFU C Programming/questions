@@ -1096,6 +1096,31 @@ int main()
 
     return 0;
 }
+**39.判断回文字符**
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char arr[100];
+    scanf("%s",arr);
+    int sz=strlen(arr);
+    char check[sz];
+    int sz2=sz;
+    for(int i=0;i<sz;i++)
+    {
+        check[i]=arr[sz2-1];
+        sz2--;
+    }
+    if(strcmp(arr,check)==0)
+    {
+        printf("yes");
+    }
+    else
+    {
+        printf("no");
+    }
+    return 0;
+}
 **//模拟考试现在开始**
 ~~以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷~~
 **//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序**
