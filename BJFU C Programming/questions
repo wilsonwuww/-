@@ -1043,6 +1043,59 @@ int main()
     }
     return 0;
 }
+**38.阿狗想在学校中请一些同学一起做一项问卷调查，为了实验的客观性，他先用计算机生成了N个1到1000之间的随机整数(N≤100)，对于其中重复的数字，只保留一个，把其余相同的数去掉，不同的数对应着不同的学生的学号。然后再把这些数从小到大排序，按照排好的顺序去找同学做调查。请你协助阿狗完成“去重”与“排序”的工作**
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+int main()
+{
+    srand((unsigned int)time(NULL));
+    int N,M,temp;
+    scanf("%d",&N);
+    M=N;
+    int arr[N];
+    for(int i=0;i<N;i++)
+    {
+        arr[i]=1+rand()%1000;
+    }
+     for(int i=0;i<N;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+    printf("\n");
+    for(int i=0;i<N-1;i++)
+    {
+        for(int j=0;j<N-i-1;j++)
+        {
+            if(arr[j+1]<arr[j])
+            {
+                temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+            }
+        }
+    }
+    for(int i=0;i<M-1;i++)
+    {
+        if(arr[i]==arr[i+1])
+        {
+            for(int j=i+1;j<M-1;j++)
+            {
+                arr[j]=arr[j+1];
+            }
+            M--;
+            i--;// 因为移除了元素，需要重新检查当前位置
+        }
+    }
+    printf("%d",M);
+    printf("\n");
+    for(int i=0;i<M;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+
+    return 0;
+}
 **//模拟考试现在开始**
 ~~以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷~~
 **//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序**
