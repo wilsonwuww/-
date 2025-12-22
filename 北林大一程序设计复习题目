@@ -905,7 +905,7 @@ int main()
 34.牛牛试图给一个长度为 n 整数数组排序，即实现一个 void sort(int *array,int n) 
 #include<stdio.h>
 #include<stdlib.h>
-void sort(int *array,int n)
+void bubble_sort(int *array,int n)
 {
     int temp;
     for(int i=0;i<n-1;i++)
@@ -930,7 +930,7 @@ int main()
     {
         scanf("%d",&p[i]);
     }
-    sort(p,n);
+    bubble_sort(p,n);
     for(int i=0;i<n;i++)
     {
         printf("%d ",*(p+i));
