@@ -1,4 +1,4 @@
-1. 1，2，3，4可以组成多少个不含重复数字的三位数
+**1. 1，2，3，4可以组成多少个不含重复数字的三位数**
 #include<stdio.h>
 int main()
 {
@@ -18,7 +18,7 @@ int main()
     printf("可以组成%d个三位数",number);
     return 0;
 }
-2.一个数字加上156 100为完全平方数
+**2.一个数字加上156 100为完全平方数**
 #include<stdio.h>
 #include<math.h>
 int main()
@@ -35,7 +35,7 @@ int main()
     }
     return 0;
 }
-3.三个数从小到大
+**3.三个数从小到大**
 #include<stdio.h>
 void exchange(int*p1,int*p2)
 {
@@ -62,7 +62,7 @@ int main()
     printf("%d %d %d",x,y,z);
     return 0;
 }
-4.输出九九乘法表
+**4.输出九九乘法表**
 #include<stdio.h>
 int main()
 {
@@ -77,7 +77,7 @@ int main()
     }
     return 0;
 }
-5.兔子问题（fib数列）
+**5.兔子问题（fib数列）**
 #include<stdio.h>
 int Fib(int n)
 {
@@ -95,7 +95,7 @@ int main()
         printf("%d",Fib(i));
     }
 }
-6.输出质数
+**6.输出质数**
 #include<stdio.h>
 #include<math.h>
 int main()
@@ -120,7 +120,7 @@ int main()
     }
     return 0;
 }
-7.水仙花数
+**7.水仙花数**
 #include<stdio.h>
 int main()
 {
@@ -137,7 +137,7 @@ int main()
     }
     return 0;
 }
-8.将整数分解质因数
+**8.将整数分解质因数**
 #include<stdio.h>
 int main()
 {
@@ -162,7 +162,7 @@ int main()
     printf("%d",input);
     return 0;
 }
-9.分项统计
+**9.分项统计**
 #include<stdio.h>
 int main()
 {
@@ -189,7 +189,7 @@ int main()
     }
     printf("%d %d %d %d",letters,space,digit,others);
 }
-10.控制数字相加
+**10.控制数字相加**
 #include<stdio.h>
 int main()
 {
@@ -204,7 +204,7 @@ int main()
     printf("%d",sum);
     return 0;
 }
-11.完数(一个数字可以表示为其质因数之和)
+**11.完数(一个数字可以表示为其质因数之和)**
 #include<stdio.h>
 int main()
 {
@@ -223,8 +223,7 @@ int main()
             else
             break;
         }
-        
-    }
+     }
     if(x==check)
     {
         printf("该数字是完数");
@@ -233,7 +232,7 @@ int main()
     printf("该数字不是完数");
     return 0;
 }
-12.小球反弹
+**12.小球反弹**
 #include<stdio.h>
 int main()
 {
@@ -248,7 +247,7 @@ int main()
     printf("第十次上升高度为：%.5f",height);
     return 0;
 }
-13.猴子吃桃子
+**13.猴子吃桃子**
 #include<stdio.h>
 int main()
 {
@@ -260,7 +259,8 @@ int main()
     printf("%d",r);
     return 0;
 }
-14.乒乓球比赛(注意边界)
+**14.乒乓球比赛(注意边界)**
+
 #include<stdio.h>
 int main()
 {
@@ -287,7 +287,7 @@ int main()
     }
     return 0;
 }
-15.数列问题
+**15.数列问题**
 #include<stdio.h>
 int main()
 {
@@ -308,7 +308,7 @@ int main()
     printf("%.2f",sum);
     return 0;
 }
-16.累加
+**16.累加**
 
 #include<stdio.h>
 int main()
@@ -323,7 +323,7 @@ int main()
     printf("%d",sum1);
     return 0;
 }
-17.递归阶乘
+**17.递归阶乘**
 #include<stdio.h>
 int Ac(int n)
 {
@@ -338,7 +338,7 @@ int main()
     printf("%d",result);
     return 0;
 }
-18.递归年龄
+**18.递归年龄**
 int age(int n)
 {
     if(n==1)//注意n==1一定要写在n>0判断的前面，否则永远无法执行
@@ -351,7 +351,7 @@ int main()
     printf("%d",age(5));
     return 0;
 }
-19.求几位数，逆序打印
+**19.求几位数，逆序打印**
 #include<stdio.h>
 int main()
 {
@@ -369,7 +369,7 @@ int main()
     printf("这是一个%d位数",number+1);
     return 0;
 }
-20.五位数判断是否是回文数
+**20.五位数判断是否是回文数**
 #include<stdio.h>
 int main()
 {
@@ -403,7 +403,7 @@ int main()
     printf("该数字不是回文数");
     }
 }
-21.递归反写字符串
+**21.递归反写字符串**
 #include<stdio.h>
 void rprint(char *p)
 {
@@ -436,7 +436,7 @@ int main()
     }
     return 0;
 }
-22.判断是星期几(monday，tuesday，wednesday，thursday，friday，saturday，sunday)
+**22.判断是星期几(monday，tuesday，wednesday，thursday，friday，saturday，sunday)**
 #include<stdio.h>
 int main()
 {
@@ -477,7 +477,7 @@ int main()
         }
     return 0;
 }
-23.100以内的质数
+**23.100以内的质数**
 #include<stdio.h>
 #include<math.h>
 int main()
@@ -502,7 +502,7 @@ int main()
     }
     return 0;
 }
-24.数组逆序输出+柔性数组
+**24.数组逆序输出+柔性数组**
 #include<stdio.h>
 struct S
 {
@@ -528,7 +528,7 @@ int main()
     return 0;
 }
 
-25.从小到大的数组插入
+**25.从小到大的数组插入**
 #include<stdio.h>
 #include<stdlib.h>
 struct S
@@ -569,8 +569,8 @@ int main()
     p=NULL;
     return 0;
 }//插入排序一定是从后往前！！！！
-26.
-//c语言中所有的排序
+**26.
+//c语言中所有的排序**
 //1.选择排序
 #include<stdio.h>
 int main()
@@ -670,7 +670,7 @@ int main()
     }
     return 0;
 }
-27.打印杨辉三角
+**27.打印杨辉三角**
 #include<stdio.h>
 int main()
 {
@@ -698,7 +698,7 @@ int main()
     }
     return 0;
 }
-28.指针将三个数从大到小输出
+**28.指针将三个数从大到小输出**
 #include<stdio.h>
 void swap(int *p1,int *p2)
 {
@@ -727,7 +727,7 @@ int main()
     printf("%d %d %d",a,b,c);
     return 0;  
 }
-29.第一个为最大，最后一个为最小
+**29.第一个为最大，最后一个为最小**
 #include<stdio.h>
 void swap(int *p1,int *p2)
 {
@@ -759,8 +759,7 @@ int main()
     }
     return 0;
 }
-30.
-//n个整数，前面m个数字放在末尾
+**30.n个整数，前面m个数字放在末尾**
 //方法一
 #include<stdio.h>
 #include<stdlib.h>
@@ -841,7 +840,7 @@ int main()
     p=NULL;
     return 0;
 }
-31.键盘输入一个字符串，编写代码获取字符串的长度并输出，要求使用字符指针实现
+**31.键盘输入一个字符串，编写代码获取字符串的长度并输出，要求使用字符指针实现**
 #include<stdio.h>
 int main()
 {
@@ -857,8 +856,7 @@ int main()
     printf("%d",number);
     return 0;
 }
-32.
-键盘输入一个长度为len（1 <= len < 30）的字符串，再输入一个正整数 m（1 <= m <= len），将此字符串中从第 m 个字符开始的剩余全部字符复制成为另一个字符串，并将这个新字符串输出。要求用指针处理字符串。
+**32.键盘输入一个长度为len（1 <= len < 30）的字符串，再输入一个正整数 m（1 <= m <= len），将此字符串中从第 m 个字符开始的剩余全部字符复制成为另一个字符串，并将这个新字符串输出。要求用指针处理字符串。**
 #include<stdio.h>
 #include<string.h>
 int main()
@@ -874,7 +872,7 @@ int main()
     }
     return 0;
 }
-33.牛牛学习了指针相关的知识，想实现一个 int cal(int *array,int n) 的函数求出长度为 n 的数组的和。
+**33.牛牛学习了指针相关的知识，想实现一个 int cal(int *array,int n) 的函数求出长度为 n 的数组的和**
 #include<stdio.h>
 #include<stdlib.h>
 int cal(int *array,int n)
@@ -901,7 +899,7 @@ int main()
     p=NULL;
     return 0;
 }
-34.牛牛试图给一个长度为 n 整数数组排序，即实现一个 void sort(int *array,int n) 
+**34.牛牛试图给一个长度为 n 整数数组排序，即实现一个 void sort(int *array,int n) **
 #include<stdio.h>
 #include<stdlib.h>
 void bubble_sort(int *array,int n)
@@ -936,9 +934,9 @@ int main()
     }
     return 0;
 }
-//模拟考试现在开始
-以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷
-//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序
+**//模拟考试现在开始**
+~~以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷~~
+**//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序**
 #include<stdio.h>
 void bubble_sort(int temp1[],int number)
 {
@@ -981,8 +979,7 @@ int main()
             temp2[number2]=arr[i];
             number2++;
         }
-      
-    }
+     }
     bubble_sort(temp1,number1);
     bubble_sort(temp2,number2);
     for(int i=0;i<number1;i++)
@@ -996,7 +993,7 @@ int main()
     }
     return 0;
 }
-//2.输入十组学生的学号，姓名，平时成绩，期末成绩，最终成绩由0.4*平时成绩+0.6*期末成绩组成，请计算出最终成绩最高的学生，并且输出其个人信息
+**//2.输入十组学生的学号，姓名，平时成绩，期末成绩，最终成绩由0.4*平时成绩+0.6*期末成绩组成，请计算出最终成绩最高的学生，并且输出其个人信息**
 #include<stdio.h>
 struct S
 {
@@ -1028,7 +1025,7 @@ int main()
     printf("%s %s %d %d",score_list[0].id,score_list[0].name,score_list[0].score1,score_list[0].score2);
     return 0;
 }
-//3.输入两个句子，将其中的单词单独作为一行存储
+**//3.输入两个句子，将其中的单词单独作为一行存储**
 提示：注意判断的先后顺序！！！
 笔者在这里出现了一些逻辑上的问题
 #include<stdio.h>
@@ -1063,7 +1060,7 @@ int main()
     }
     return 0;
 }
-//4.同上题，is a the是关键字，遇到时直接跳过，并继续输出下一个单词
+**//4.同上题，is a the是关键字，遇到时直接跳过，并继续输出下一个单词*
 #include<stdio.h>
 int main()
 {
