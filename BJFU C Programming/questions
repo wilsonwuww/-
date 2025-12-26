@@ -1272,6 +1272,66 @@ int main()
     printf("%d",count);
     return 0;
 }
+**45.平均分配**
+描述
+给定一列数，判断是否能平均分配
+输入输入分两行
+第一行为2个数n，m，表示数组长度和需要平均分配的份数
+第二行为n个数，表示数组里的数（保证输入的数组里的数0<=n<=9）
+输出
+Yes或者No
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int n,m;
+    scanf("%d %d",&n,&m);
+    int *p=(int *)malloc(n*sizeof(int));
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&p[i]);
+    }
+    for(int i=0;i<n-1;i++)
+    {
+        for(int j=0;j<n-1-i;j++)
+        {
+            if(p[j]>p[j+1])
+            {
+                int temp;
+                temp=p[j];
+                p[j]=p[j+1];
+                p[j+1]=temp;
+            }
+        }
+    }
+    int count=1;
+    int flag=1;
+    for(int i=0;i<n;i++)
+    {
+        if(i<n-1&&p[i]==p[i+1])
+        {
+            count++;
+        }
+        if(p[i]!=p[i+1])
+        {
+            if((count%m)!=0)
+            {
+                printf("No");
+                flag=0;
+                break;
+            }
+            count=1;
+        }
+
+    }
+    if(flag)
+    {
+        printf("Yes");
+    }
+    free(p);
+    p=NULL;
+    return 0;
+}
 **//模拟考试现在开始**
 ~~以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷~~
 **//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序**
