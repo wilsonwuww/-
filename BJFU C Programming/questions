@@ -1569,4 +1569,45 @@ int main()
     }
     return 0;
 }
+**5.使用指针将字符串原地逆序**
+使用指针统计字符串中数字字符的个数
+使用指针查找特定字符首次出现的位置
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char input[100];
+    char *p=input;
+    int number=0;
+    int length;
+    scanf("%s",input);
+    length=strlen(input);
+    for(int i=length-1;i>=0;i--)
+    {
+        printf("%c",*(p+i));
+    }
+    for(int i=0;i<length;i++)
+    {
+        if(p[i]>='0'&&p[i]<='9')//注意这个地方是字符所以是''
+        {
+            number++;
+        }
+    }
+    printf("\n");
+    printf("%d",number);
+    char target;
+    printf("\n");
+    getchar();
+    scanf("%c",&target);
+    for(int i=0;i<length;i++)
+    {
+        if(p[i]==target)
+        {
+            printf("%c首次出现在%d位",target,i+1);
+            break;
+        }
+    }
+    return 0;
+}
+**6.
 
