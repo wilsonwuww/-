@@ -1392,6 +1392,116 @@ int main()
     p=NULL;
     return 0;
 }
+**47.指针模拟实现二维数组
+以及数组的加减法，数组的转置
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int m,n;
+    scanf("%d %d",&m,&n);
+    int *arr1=(int *)malloc(m*n*sizeof(int));
+    int *arr2=(int *)malloc(m*n*sizeof(int));
+    int *arr3=(int *)malloc(m*n*sizeof(int));
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            scanf("%d",&arr1[n*i+j]);
+        }
+    }
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            scanf("%d",&arr2[n*i+j]);
+        }
+    }
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            arr3[n*i+j]=arr1[n*i+j]+arr2[n*i+j];
+        }
+    }
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            arr3[n*i+j]=arr1[n*i+j]-arr2[n*i+j];
+        }
+    }
+    printf("\n");
+    for(int i=0;i<m;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            printf("%d ",arr3[n*i+j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            printf("%d ",arr1[i+n*j]);
+        }
+        printf("\n");
+    }
+    free(arr1);
+    free(arr2);
+    free(arr3);
+    return 0;
+}
+**48.字符串的倒置，字符的查找，数字个数的统计**
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char input[100];
+    char *p=input;
+    int number=0;
+    int length;
+    scanf("%s",input);
+    length=strlen(input);
+    for(int i=length-1;i>=0;i--)
+    {
+        printf("%c",*(p+i));
+    }
+    for(int i=0;i<length;i++)
+    {
+        if(p[i]>='0'&&p[i]<='9')//注意这个地方是字符所以是''
+        {
+            number++;
+        }
+    }
+    printf("\n");
+    printf("%d",number);
+    char target;
+    printf("\n");
+    getchar();
+    scanf("%c",&target);
+    for(int i=0;i<length;i++)
+    {
+        if(p[i]==target)
+        {
+            printf("%c首次出现在%d位",target,i+1);
+            break;
+        }
+    }
+        if(found)
+    {
+        printf("target 在排序后数组的第%d位",found+1);
+    }
+    else
+    {
+        printf("该数字不在数组中");
+    }
+    free(p);
+    p=NULL;
+    return 0;
+}
 **//模拟考试现在开始**
 ~~以下题目是北京林业大学2021-2022学年度第一学期程序设计期末考试试卷~~
 **//1.请输入十个-20-20的数字，假设输入的数字都符合要求，输入数字n对小于n的数字进行从小到大的排序，对大于n的数字也进行从小到大的排序**
