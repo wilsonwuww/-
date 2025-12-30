@@ -1719,5 +1719,90 @@ int main()
     }
     return 0;
 }
-**6.
+**6./* 使用指针完成数组元素交换和统计
+   输入10个整数，完成以下操作：
+   1. 使用指针将数组中的奇数和偶数分别存放在数组前部和后部
+   2. 分别统计奇数和偶数的个数
+   3. 使用指针实现奇数部分和偶数部分的分别逆序
+   
+   示例输入：1 2 3 4 5 6 7 8 9 10
+   示例输出：
+   奇数部分：9 7 5 3 1
+   偶数部分：10 8 6 4 2
+   奇数个数：5，偶数个数：5
+*/
+#include<stdio.h>
+void bubble_sort(int *arr,int n)
+{
+    for(int i=0;i<n-1;i++)
+    {
+        for(int j=0;j<n-1-i;j++)
+        {
+            if(arr[j+1]>arr[j])
+            {
+                int temp;
+                temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+            }
+        }
+    }
+}
+int main()
+{
+    int arr[10];
+    int *p=arr;
+    for(int i=0;i<10;i++)
+    {
+        scanf("%d",p+i);
+    }
+    int odd[10];
+    int even[10];
+    int *p1=odd,*p2=even;
+    int  odd_number=0,even_number=0;
+    for(int i=0;i<10;i++)
+    {
+        if(p[i]%2==1)
+        {
+            p1[odd_number]=arr[i];
+            odd_number++;
+        }
+        if(p[i]%2==0)
+        {
+            p2[even_number]=arr[i];
+            even_number++;
+        }
+    }
+    for(int i=0;i<odd_number;i++)
+    {
+        p[i]=p1[i];
+    }
+    int k=0;
+    for(int i=odd_number;i<odd_number+even_number;i++)
+    {
+        p[i]=p2[k];
+        k++;
+    }
+    bubble_sort(p1,odd_number);
+    bubble_sort(p2,even_number);
+    printf("奇数部分:");
+    for(int i=0;i<odd_number;i++)
+    {
+        printf("%d ",p1[i]);
+    }
+    printf("\n");
+    printf("偶数部分:");
+    for(int i=0;i<even_number;i++)
+    {
+        printf("%d ",p2[i]);
+    }
+    printf("\n");
+    printf("奇数个数：%d",odd_number);
+    printf("\n");
+    printf("偶数个数: %d",even_number);
+    free(p);
+    free(p1);
+    free(p2);
+    return 0;
+}
 
